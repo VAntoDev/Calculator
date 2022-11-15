@@ -18,17 +18,17 @@ function operate(firstNum, operator, secondNum){
 
     switch(operator) {                                
         case '+':                                 
-            add(firstNum, secondNum)                  
-            break;                                      
+            return add(firstNum, secondNum)                  
+                                                  
         case '-':
-            subtract(firstNum, secondNum);                    
-            break;
+            return subtract(firstNum, secondNum);                    
+            
         case '*':
-            multiply(firstNum, secondNum);
-            break;
+            return multiply(firstNum, secondNum);
+            
         case '/':
-            divide(firstNum, secondNum);
-            break;
+            return divide(firstNum, secondNum);
+            
         default:
             break;
     }
@@ -55,62 +55,107 @@ const multiplyMoreNum = function(array) {
 };
 
 
-let currentOperation = 0;
-
-const storeOperation = function(number) {
-    currentOperation = number + currentOperation;
-    results.textContent = currentOperation;
-}
 
 const results = document.querySelector("#results")
 
+//Numbers
 const numberOneBtn = document.querySelector("#one");
 numberOneBtn.addEventListener("click", function (){
-    storeOperation(1);
+    addNumToOperation("1");
 });
 
 const numberTwoBtn = document.querySelector("#two");
 numberTwoBtn.addEventListener("click", function (){
-    storeOperation(2);
+    addNumToOperation("2");
 });
 
 const numberThreeBtn = document.querySelector("#three");
 numberThreeBtn.addEventListener("click", function (){
-    storeOperation(3);
+    addNumToOperation("3");
 });
 
 const numberFourBtn = document.querySelector("#four");
 numberFourBtn.addEventListener("click", function (){
-    storeOperation(4);
+    addNumToOperation("4");
 });
 
 const numberFiveBtn = document.querySelector("#five");
 numberFiveBtn.addEventListener("click", function (){
-    storeOperation(5);
+    addNumToOperation("5");
 });
 
 const numberSixBtn = document.querySelector("#six");
 numberSixBtn.addEventListener("click", function (){
-    storeOperation(6);
+    addNumToOperation("6");
 });
 
 const numberSevenBtn = document.querySelector("#seven");
 numberSevenBtn.addEventListener("click", function (){
-    storeOperation(7);
+    addNumToOperation("7");
 });
 
 const numberEightBtn = document.querySelector("#eight");
 numberEightBtn.addEventListener("click", function (){
-    storeOperation(8);
+    addNumToOperation("8");
 });
 
 const numberNineBtn = document.querySelector("#nine");
 numberNineBtn.addEventListener("click", function (){
-    storeOperation(9);
+    addNumToOperation("9");
 });
 
 const numberZeroBtn = document.querySelector("#zero");
 numberZeroBtn.addEventListener("click", function (){
-    storeOperation(0);
+    addNumToOperation("0");
 });
+
+//Operators
+
+const operatorPlusBtn = document.querySelector("#plus");
+operatorPlusBtn.addEventListener("click", function (){
+    addOperatorToOperation("+");
+});
+
+const operatorMinusBtn = document.querySelector("#minus");
+operatorMinusBtn.addEventListener("click", function (){
+    addOperatorToOperation("-");
+});
+
+const operatorMultiplyBtn = document.querySelector("#multiply");
+operatorMultiplyBtn.addEventListener("click", function (){
+    addOperatorToOperation("*");
+});
+
+const operatorDivideBtn = document.querySelector("#divide");
+operatorDivideBtn.addEventListener("click", function (){
+    addOperatorToOperation("/");
+});
+
+const operatorEqualBtn = document.querySelector("#equal");
+operatorEqualBtn.addEventListener("click", function (){
+    results.textContent = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
+    storedOperation.firstNum = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
+    storedOperation.operator = "";
+    storedOperation.secondNum = "";
+});
+
+//Execution of the operation
+
+const addNumToOperation = function(number) {
+    if(storedOperation.operator === ""){
+        storedOperation.firstNum += number;
+    } else {
+        storedOperation.secondNum += number;
+    }   
+}
+
+const addOperatorToOperation = function(operator){
+    storedOperation.operator = operator;
+}
+
+let storedOperation = {
+    firstNum: "",
+    operator: "",
+    secondNum: "",
+}
 
