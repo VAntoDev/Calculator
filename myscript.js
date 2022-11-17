@@ -55,7 +55,7 @@ const multiplyMoreNum = function(array) {
 };
 
 
-
+//Query selectors
 const results = document.querySelector("#results")
 
 //Numbers
@@ -133,29 +133,68 @@ operatorDivideBtn.addEventListener("click", function (){
 
 const operatorEqualBtn = document.querySelector("#equal");
 operatorEqualBtn.addEventListener("click", function (){
-    results.textContent = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
-    storedOperation.firstNum = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
-    storedOperation.operator = "";
-    storedOperation.secondNum = "";
+    if(storedOperation.firstNum === "" || storedOperation.operator === "" || storedOperation.secondNum === ""){
+        
+    } else {
+    execOperation()
+    }
 });
 
 //Execution of the operation
-
-const addNumToOperation = function(number) {
-    if(storedOperation.operator === ""){
-        storedOperation.firstNum += number;
-    } else {
-        storedOperation.secondNum += number;
-    }   
-}
-
-const addOperatorToOperation = function(operator){
-    storedOperation.operator = operator;
-}
 
 let storedOperation = {
     firstNum: "",
     operator: "",
     secondNum: "",
+    result: false,
 }
 
+const addNumToOperation = function(number) {
+
+    if(storedOperation.result){
+        storedOperation.firstNum = "";
+        storedOperation.firstNum += number;
+        storedOperation.result = false;
+        displayResults();
+    } else if(storedOperation.operator === ""){
+        storedOperation.firstNum += number;
+        displayResults();
+    } else {
+        storedOperation.secondNum += number;
+        displayResults();
+    }   
+
+}
+
+const addOperatorToOperation = function(operator){
+    if (storedOperation.operator != ""){
+        execOperation();
+        storedOperation.operator = "";
+    }
+    storedOperation.operator = operator;
+    displayResults();
+}
+
+function execOperation(){
+    storedOperation.firstNum = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
+    storedOperation.result = true;
+    storedOperation.operator = "";
+    storedOperation.secondNum = "";
+    displayResults();
+    
+}
+
+function displayResults(){
+    results.textContent = `${storedOperation.firstNum} ${storedOperation.operator} ${storedOperation.secondNum}`
+}
+
+/*
+if(storedOperation.operator === ""){
+    storedOperation.firstNum += number;
+} else if(storedOperation.firstNum === results.textContent){
+    storedOperation.firstNum = "";
+    storedOperation.firstNum += number;
+} else {
+    storedOperation.secondNum += number;
+}   
+*/
