@@ -1,60 +1,3 @@
-const add = function(firstNum, secondNum) {
-    return firstNum + secondNum;
-};
-
-const subtract = function(firstNum, secondNum) {
-    return firstNum - secondNum;
-};
-
-const multiply = function(firstNum, secondNum) {
-    return firstNum * secondNum;
-};
-
-const divide = function(firstNum, secondNum) {
-    return firstNum / secondNum;
-};
-
-function operate(firstNum, operator, secondNum){
-
-    switch(operator) {                                
-        case '+':                                 
-            return add(firstNum, secondNum)                  
-                                                  
-        case '-':
-            return subtract(firstNum, secondNum);                    
-            
-        case '*':
-            return multiply(firstNum, secondNum);
-            
-        case '/':
-            return divide(firstNum, secondNum);
-            
-        default:
-            break;
-    }
-
-}
-
-
-//-Sum more than 2 numbers together:
-const sum = function(array) {
-  let totalSum = 0;
-  for(i = 0; i < array.length; i++){
-    totalSum = totalSum + array[i];
-  };
-  return totalSum;
-}
-
-
-const multiplyMoreNum = function(array) {
-  let totalMultiply = 1;
-  for(i = 0; i < array.length; i++){
-    totalMultiply = totalMultiply * array[i];
-  };
-  return totalMultiply;
-};
-
-
 //Query selectors
 const results = document.querySelector("#results")
 
@@ -133,11 +76,13 @@ operatorDivideBtn.addEventListener("click", function (){
 
 const operatorEqualBtn = document.querySelector("#equal");
 operatorEqualBtn.addEventListener("click", function (){
+
     if(storedOperation.firstNum === "" || storedOperation.operator === "" || storedOperation.secondNum === ""){
-        
+
     } else {
-    execOperation()
+        execOperation()
     }
+
 });
 
 //Execution of the operation
@@ -146,17 +91,55 @@ let storedOperation = {
     firstNum: "",
     operator: "",
     secondNum: "",
-    result: false,
+    
 }
 
-const addNumToOperation = function(number) {
+let i = 0;
 
-    if(storedOperation.result){
-        storedOperation.firstNum = "";
-        storedOperation.firstNum += number;
-        storedOperation.result = false;
-        displayResults();
-    } else if(storedOperation.operator === ""){
+const add = function(firstNum, secondNum) {
+    return firstNum + secondNum;
+};
+
+const subtract = function(firstNum, secondNum) {
+    return firstNum - secondNum;
+};
+
+const multiply = function(firstNum, secondNum) {
+    return firstNum * secondNum;
+};
+
+const divide = function(firstNum, secondNum) {
+    return firstNum / secondNum;
+};
+
+function operate(firstNum, operator, secondNum){
+
+    switch(operator) {                                
+        case '+':                                 
+            return add(firstNum, secondNum)                  
+                                                  
+        case '-':
+            return subtract(firstNum, secondNum);                    
+            
+        case '*':
+            return multiply(firstNum, secondNum);
+            
+        case '/':
+            return divide(firstNum, secondNum);
+            
+        default:
+            break;
+    }
+
+}
+
+const addNumToOperation = function(number) {  
+    if(storedOperation.operator === ""){
+        if(i != 0){
+            storedOperation.firstNum = "";
+            displayResults();
+            i = 0;
+        }
         storedOperation.firstNum += number;
         displayResults();
     } else {
@@ -167,7 +150,7 @@ const addNumToOperation = function(number) {
 }
 
 const addOperatorToOperation = function(operator){
-    if (storedOperation.operator != ""){
+    if (storedOperation.operator != "" && storedOperation.secondNum != ""){
         execOperation();
         storedOperation.operator = "";
     }
@@ -177,24 +160,13 @@ const addOperatorToOperation = function(operator){
 
 function execOperation(){
     storedOperation.firstNum = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
-    storedOperation.result = true;
     storedOperation.operator = "";
     storedOperation.secondNum = "";
+    i = 1;
     displayResults();
-    
+
 }
 
 function displayResults(){
     results.textContent = `${storedOperation.firstNum} ${storedOperation.operator} ${storedOperation.secondNum}`
 }
-
-/*
-if(storedOperation.operator === ""){
-    storedOperation.firstNum += number;
-} else if(storedOperation.firstNum === results.textContent){
-    storedOperation.firstNum = "";
-    storedOperation.firstNum += number;
-} else {
-    storedOperation.secondNum += number;
-}   
-*/
