@@ -109,26 +109,29 @@ const multiply = function(firstNum, secondNum) {
 };
 
 const divide = function(firstNum, secondNum) {
-    return firstNum / secondNum;
+    return Math.round(firstNum / secondNum * 100) / 100;
 };
 
 function operate(firstNum, operator, secondNum){
-
-    switch(operator) {                                
-        case '+':                                 
-            return add(firstNum, secondNum)                  
-                                                  
-        case '-':
-            return subtract(firstNum, secondNum);                    
-            
-        case '*':
-            return multiply(firstNum, secondNum);
-            
-        case '/':
-            return divide(firstNum, secondNum);
-            
-        default:
-            break;
+    if(firstNum === 0 && secondNum === 0){
+        return "Lmao no"
+    } else {
+        switch(operator) {                          
+            case '+':                                 
+                return add(firstNum, secondNum)                  
+                                                    
+            case '-':
+                return subtract(firstNum, secondNum);                    
+                
+            case '*':
+                return multiply(firstNum, secondNum);
+                
+            case '/':
+                return divide(firstNum, secondNum);
+                
+            default:
+                break;
+        }
     }
 
 }
@@ -170,3 +173,4 @@ function execOperation(){
 function displayResults(){
     results.textContent = `${storedOperation.firstNum} ${storedOperation.operator} ${storedOperation.secondNum}`
 }
+
