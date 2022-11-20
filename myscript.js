@@ -85,6 +85,12 @@ operatorEqualBtn.addEventListener("click", function (){
 
 });
 
+const clearBtn = document.querySelector("#CE");
+clearBtn.addEventListener("click", function (){
+    clearOperation();
+    displayResults();
+})
+
 //Execution of the operation
 
 let storedOperation = {
@@ -105,7 +111,7 @@ const subtract = function(firstNum, secondNum) {
 };
 
 const multiply = function(firstNum, secondNum) {
-    return firstNum * secondNum;
+    return Math.round(firstNum * secondNum * 100) / 100;
 };
 
 const divide = function(firstNum, secondNum) {
@@ -114,7 +120,7 @@ const divide = function(firstNum, secondNum) {
 
 function operate(firstNum, operator, secondNum){
     if(firstNum === 0 && secondNum === 0){
-        return "Lmao no"
+        return "Lmao no";
     } else {
         switch(operator) {                          
             case '+':                                 
@@ -157,6 +163,9 @@ const addOperatorToOperation = function(operator){
         execOperation();
         storedOperation.operator = "";
     }
+    if (storedOperation.firstNum === ""){
+        return
+    }
     storedOperation.operator = operator;
     displayResults();
 }
@@ -167,10 +176,17 @@ function execOperation(){
     storedOperation.secondNum = "";
     i = 1;
     displayResults();
-
+    if(storedOperation.firstNum === "Lmao no"){
+        storedOperation.firstNum = "";
+    }
 }
 
 function displayResults(){
     results.textContent = `${storedOperation.firstNum} ${storedOperation.operator} ${storedOperation.secondNum}`
 }
 
+function clearOperation(){
+    storedOperation.firstNum = "";
+    storedOperation.operator = "";
+    storedOperation.secondNum = ""; 
+}
