@@ -91,6 +91,11 @@ clearBtn.addEventListener("click", function (){
     displayResults();
 })
 
+const dotBtn = document.querySelector("#dot");
+dotBtn.addEventListener("click", function (){
+    addDotToNumber();
+})
+
 //Execution of the operation
 
 let storedOperation = {
@@ -102,6 +107,8 @@ let storedOperation = {
 
 let i = 0;
 
+let dotIsPresent = 0;
+
 const add = function(firstNum, secondNum) {
     return firstNum + secondNum;
 };
@@ -111,11 +118,13 @@ const subtract = function(firstNum, secondNum) {
 };
 
 const multiply = function(firstNum, secondNum) {
-    return Math.round(firstNum * secondNum * 100) / 100;
+    //return Math.round(firstNum * secondNum * 100) / 100;
+    return firstNum * secondNum;
 };
 
 const divide = function(firstNum, secondNum) {
-    return Math.round(firstNum / secondNum * 100) / 100;
+    //return Math.round(firstNum / secondNum * 100) / 100;
+    return firstNum / secondNum;
 };
 
 function operate(firstNum, operator, secondNum){
@@ -171,7 +180,7 @@ const addOperatorToOperation = function(operator){
 }
 
 function execOperation(){
-    storedOperation.firstNum = operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum);
+    storedOperation.firstNum = Math.round(operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum) * 100 ) / 100;
     storedOperation.operator = "";
     storedOperation.secondNum = "";
     i = 1;
@@ -189,4 +198,22 @@ function clearOperation(){
     storedOperation.firstNum = "";
     storedOperation.operator = "";
     storedOperation.secondNum = ""; 
+}
+
+function addDotToNumber(){
+    
+    if(storedOperation.operator === ""){
+
+        if(!storedOperation.firstNum.includes(".")){      
+            storedOperation.firstNum += ".";
+            displayResults();
+        }
+
+    } else {
+        
+        if(!storedOperation.secondNum.includes(".")){
+            storedOperation.secondNum += ".";
+            displayResults();
+            }
+        }  
 }
