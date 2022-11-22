@@ -96,6 +96,11 @@ dotBtn.addEventListener("click", function (){
     addDotToNumber();
 })
 
+const backspaceBtn = document.querySelector("#backspace");
+backspaceBtn.addEventListener("click", function (){
+    undoLastDigit();
+})
+
 //Execution of the operation
 
 let storedOperation = {
@@ -128,9 +133,6 @@ const divide = function(firstNum, secondNum) {
 };
 
 function operate(firstNum, operator, secondNum){
-    if(firstNum === 0 && secondNum === 0){
-        return "Lmao no";
-    } else {
         switch(operator) {                          
             case '+':                                 
                 return add(firstNum, secondNum)                  
@@ -149,7 +151,7 @@ function operate(firstNum, operator, secondNum){
         }
     }
 
-}
+
 
 const addNumToOperation = function(number) {  
     if(storedOperation.operator === ""){
@@ -180,13 +182,19 @@ const addOperatorToOperation = function(operator){
 }
 
 function execOperation(){
-    storedOperation.firstNum = Math.round(operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum) * 100 ) / 100;
-    storedOperation.operator = "";
-    storedOperation.secondNum = "";
-    i = 1;
-    displayResults();
-    if(storedOperation.firstNum === "Lmao no"){
+    if(storedOperation.firstNum === "0" && storedOperation.secondNum === "0"){
+        storedOperation.firstNum = "Lmao no";
+        storedOperation.operator = "";
+        storedOperation.secondNum = "";
+        displayResults();
         storedOperation.firstNum = "";
+
+    } else {
+        storedOperation.firstNum = `${Math.round(operate(+storedOperation.firstNum, storedOperation.operator, +storedOperation.secondNum) * 100 ) / 100}`;
+        storedOperation.operator = "";
+        storedOperation.secondNum = "";
+        i = 1;
+        displayResults();
     }
 }
 
@@ -201,7 +209,9 @@ function clearOperation(){
 }
 
 function addDotToNumber(){
-    
+    if(storedOperation.firstNum === "" || i === 1){
+        return
+    }
     if(storedOperation.operator === ""){
 
         if(!storedOperation.firstNum.includes(".")){      
@@ -210,10 +220,27 @@ function addDotToNumber(){
         }
 
     } else {
-        
+
+        if(storedOperation.secondNum === ""){
+            return
+        }
         if(!storedOperation.secondNum.includes(".")){
             storedOperation.secondNum += ".";
             displayResults();
             }
         }  
+}
+
+function undoLastDigit(){
+    if(storedOperation.secondNum != ""){
+        storedOperation.secondNum = storedOperation.secondNum.slice(0, -1);
+        displayResults();
+    }
+    else if(storedOperation.operator != ""){
+        storedOperation.operator = storedOperation.operator.slice(0, -1);
+        displayResults();
+    } else {
+    storedOperation.firstNum = storedOperation.firstNum.slice(0, -1);
+        displayResults();
+    }
 }
