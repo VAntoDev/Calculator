@@ -11,12 +11,16 @@ body {
     color: #254441;
 }
 
+#title{
+    margin: 20px;
+}
+
 #calculator-container{
     display: flex;
     flex-direction: column;
     border: 10px solid #8CFF98;
     height: 575px;
-    padding: 2%;
+    padding: 1.5% 2% 2% 2%;
     border-radius: 60px;
     gap: 50px;
 }
@@ -52,7 +56,10 @@ body {
 #backspace{
     grid-column-start: 3;
     grid-column-end: 5;
+    font-weight: bold;
 }
+
+
 
 button{
     font-size: 50px;
@@ -61,6 +68,8 @@ button{
     border-radius: 20px;
     color: #254441;
     background-color: #F58EA6;
+    box-shadow: 5px 5px;
+    
 }
 
 button:hover{
@@ -71,4 +80,8 @@ button:hover{
 button:active{
     box-shadow: 3px 3px;
     background-color: #f3849e
+}
+
+a{
+    color:rgb(74, 74, 250);
 }
